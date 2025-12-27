@@ -22,25 +22,29 @@ const ResendVerificationPage: React.FC = () => {
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setError('');
-    setSuccess(false);
-    setLoading(true);
+  e.preventDefault();
+  setError('');
+  setSuccess(false);
+  setLoading(true);
 
-    try {
-      const response = await axios.post(
-        'https://shophere-course.onrender.com/api/auth/resend-verification',
-        { email }
-      );
-      setSuccess(true);
-      setError('');
-    } catch (err: any) {
-      setError(err.response?.data?.message || 'Failed to resend verification email');
-      setSuccess(false);
-    } finally {
-      setLoading(false);
-    }
-  };
+  try {
+    const response = await axios.post(
+      `${process.env.REACT_APP_API_URL}/api/auth/resend-verification`,
+      { email }
+    );
+
+    setSuccess(true);
+    setError('');
+  } catch (err: any) {
+    setError(
+      err.response?.data?.message || 'Failed to resend verification email'
+    );
+    setSuccess(false);
+  } finally {
+    setLoading(false);
+  }
+};
+
 
   return (
     <Container maxWidth="sm" sx={{ mt: 8 }}>
@@ -105,6 +109,7 @@ const ResendVerificationPage: React.FC = () => {
 };
 
 export default ResendVerificationPage;
+
 
 
 
